@@ -1,0 +1,81 @@
+# This file is part of ipa_grasppose_dnn.
+# Copyright (C) 2021  Marc Riedlinger
+
+# ipa_grasppose_dnn is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#!/usr/bin/env python
+
+"""
+How to use:
+WARNING: This procedure moves and renames files, so there are changes done that are irreversible (ensure to make backups)
+1) Out of the complete dataset extract a test dataset by moving the whole data of appropriate objects to a test subfolder
+   The remaining data now resides in the training folder
+2) Chose a validation_split_ratio and assign the training_dataset_path (e.g. /home/rmb-mr/.ros/grasp_database_processed/training)
+   Execute the script to generate a validation set for the training process
+   The validation data is extracted from the training data to match the specified ratio and resides in a new validation folder
+"""
+
+import os
+import numpy as np
+
+
+# User definable parameters
+# Use 0.15 for full dataset
+validation_split_ratio = 0.15  # % of training data used for validation
+training_dataset_path = "/home/rmb-mr/.ros/grasp_database_processed/training"
+object_subfolders = ["bad", "good"]
+
+
+# Create validation folder
+base_path, _ = os.path.split(training_dataset_path)
+validation_dataset_path = os.path.join(base_path, "validation")
+if not os.path.isdir(validation_dataset_path):
+    os.mkdir(validation_dataset_path)
+
+# Load object folders from training dataset
+objects = [os.path.join(training_dataset_path, ob) for ob in os.listdir(training_dataset_path)
+           if os.path.isdir(os.path.join(training_dataset_path, ob))]  # get list of full paths of object folders
+
+for obj in objects:
+    for sub in object_subfolders:
+        _, obj_name = os.path.split(obj)
+        training_path = os.path.join(obj, sub)
+        validation_path = os.path.join(validation_dataset_path, obj_name)
+        if not os.path.isdir(validation_path):
+            os.mkdir(validation_path)  # create object subfolder in validation folder
+        validation_path = os.path.join(validation_path, sub)
+        os.mkdir(validation_path)  # create bad/good subfolder for current object
+        file_count = len(os.listdir(os.path.join(obj, sub)))  # count files in each subfolder
+        val_split = int(round(validation_split_ratio * file_count))
+
+        # Generate array of random unique integers in [1, file_count]
+        val_indexes = np.random.choice(np.arange(1, file_count+1), size=val_split, replace=False)  # not 0-indexed
+
+        # Move files that correspond to val_indexes into validation folder
+        counter = 1
+        for idx in val_indexes:
+            dataset_old = obj_name+"_dataset_"+str(idx)+".yml"
+            dataset_new = obj_name+"_dataset_"+str(counter)+".yml"
+            os.rename(os.path.join(training_path, dataset_old), os.path.join(validation_path, dataset_new))
+            counter += 1
+
+        # Rename training files so their indexes are consistent again
+        counter = 1
+        for idx in xrange(1, file_count+1):
+            dataset_old = obj_name+"_dataset_"+str(idx)+".yml"
+            file_path_old = os.path.join(training_path, dataset_old)
+            if os.path.isfile(file_path_old):  # skip files that have been moved
+                dataset_new = obj_name+"_dataset_"+str(counter)+".yml"
+                os.rename(file_path_old, os.path.join(training_path, dataset_new))
+                counter += 1

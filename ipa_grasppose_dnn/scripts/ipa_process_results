@@ -1,0 +1,224 @@
+# This file is part of ipa_grasppose_dnn.
+# Copyright (C) 2021  Marc Riedlinger
+
+# ipa_grasppose_dnn is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#!/usr/bin/env python
+
+"""
+How to use:
+1) Plot the losses by setting plot_loss = True and executing the script (inside the folder of the chosen session)
+2) Open the generated plot and decide which epoch range to take for the next evaluation step.
+   Apply the desired range by setting epoch_range_lower and epoch_range_upper accordingly
+   Set database to the validation set (e.g.: /home/rmb-mr/.ros/grasp_database_processed/validation)
+   Set a wanted_min_precision that is used to find the best threshold on the precision-recall curve
+   Set plot_loss = False
+   Set test_run = False
+   Execute the script
+   The best epoch is picked along with the best threshold and plots are generated (precision-recall, confusion matrix)
+3) Set chosen_threshold to the calculated one (copy from console output)
+   Apply the found best epoch by setting epoch_range_lower and epoch_range_upper to this value
+   Set database to the test set (e.g.: /home/rmb-mr/.ros/grasp_database_processed/test)
+   Set plot_loss = False
+   Set test_run = True
+   Execute script to get the plots (precision-recall, confusion matrix) for the test data
+Hint: Step 3) can also be executed with the training data (just set database accordingly)
+"""
+
+import tensorflow as tf
+from keras.backend.tensorflow_backend import set_session
+from keras.models import load_model
+import keras.backend as K
+from ipa_grasppose_dnn import GraspDataGenerator
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn.metrics import classification_report, average_precision_score, precision_recall_curve
+import scikitplot as skplt
+from time import time
+
+
+# Parameters for processing, take the same as in ipa_train_grasp_dnn script
+train_params = {"depth_image_dim": [32, 32, 1],
+                "grasp_data_dim": [8, 8, 4],  # first two elements have to match shape[1:3] last layer of CNN tower
+                "batch_size": 192,
+                "sample_class": -1,  # can be used for up-/downsampling, -1 turns it off
+                "sample_ratio": 1.0,
+                "sample_seed": 65536,
+                "shuffle": False}  # shuffling has no effect here
+
+# Fix wanted_min_precision to a wished value and find a good threshold for the validation dataset first.
+# Then change database to the test dataset and set test_run to True to evaluate the performance on unseen data.
+database = "/home/rmb-mr/.ros/grasp_database_processed/test"
+models_file_path = "/home/rmb-mr/.ros/models/session_14"
+
+num_outputs = 1  # how many output neurons the NN architecture has
+wanted_min_precision = 0.8
+chosen_threshold = 0.727079
+epoch_range_lower = 50  # version of the NN below this epoch are skipped
+epoch_range_upper = 50  # version of NN above this epoch are skipped
+test_run = True  # False: Find threshold based on wanted_min_precision for validation data
+                  # True: Use user-defined threshold for test data
+plot_loss = False  # Only plots loss and exits
+
+
+# Focal loss to counter effect of data duplicates
+# alpha weighs positive class 1 -> 1-alpha is weight for 0
+# Taken from: https://github.com/aldi-dimara/keras-focal-loss
+# Adjusted to take the mean which is the same keras does with its binary_crossentropy in losses.py
+def binary_focal_loss(gamma=2., alpha=.5):
+    """
+    Binary form of focal loss.
+      FL(p_t) = -alpha * (1 - p_t)**gamma * log(p_t)
+      where p = sigmoid(x), p_t = p or 1 - p depending on if the label is 1 or 0, respectively.
+    References:
+        https://arxiv.org/pdf/1708.02002.pdf
+    Usage:
+     model.compile(loss=[binary_focal_loss(alpha=.5, gamma=2)], metrics=["accuracy"], optimizer=adam)
+    """
+    def binary_focal_loss_fixed(y_true, y_pred):
+        """
+        :param y_true: A tensor of the same shape as `y_pred`
+        :param y_pred:  A tensor resulting from a sigmoid
+        :return: Output tensor.
+        """
+
+        epsilon = K.epsilon()
+        y_pred = K.clip(y_pred, epsilon, 1. - epsilon) # clip to prevent NaN's and Inf's
+        p_t = tf.where(K.equal(y_true, 1), y_pred, 1 - y_pred)
+        alpha_factor = K.ones_like(y_true) * alpha
+        alpha_t = tf.where(K.equal(y_true, 1), alpha_factor, 1 - alpha_factor)
+        return K.mean(K.pow(1. - p_t, gamma) * alpha_t * K.binary_crossentropy(y_true, y_pred), axis=-1)
+
+    return binary_focal_loss_fixed
+
+
+if not os.path.isdir(models_file_path):
+    print("Error, given models path {} does not exist.".format(models_file_path))
+    exit()
+
+# Allow dynamically growing GPU memory to avoid crashes
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+set_session(sess)  # set this TensorFlow session as the default session for Keras
+
+# Create subfolder for plots
+plots_path = os.path.join(models_file_path, "plots")
+if not os.path.isdir(plots_path):
+    os.mkdir(plots_path)
+
+# Load history to plot training process
+if plot_loss:
+    try:
+        data = pd.read_csv(os.path.join(models_file_path, "history.csv"))
+
+        # Save plot for loss history
+        plt_path = os.path.join(plots_path, "loss.pdf")
+        plt.plot(data["epoch"], data["loss"])
+        plt.plot(data["epoch"], data["val_loss"])
+        plt.title("Model Loss")
+        plt.ylabel("Loss")
+        plt.xlabel("Epoch")
+        plt.legend(["Training", "Validation"], loc="upper right")
+        plt.grid(True)
+        plt.savefig(plt_path)
+        plt.clf()
+
+    except:
+        print("Unable to read history.csv")
+
+    exit()
+
+# List all available models
+models = []
+epochs = []
+for i in xrange(1, 5000):  # get model file paths
+    f = os.path.join(models_file_path, "model_{:03d}.h5".format(i))
+    if os.path.isfile(f):
+        models.append(f)
+        epochs.append(i)
+
+# Evaluate all given models inside file path
+evaluation_generator = GraspDataGenerator(database, **train_params)
+evaluation_generator.num_outputs = num_outputs
+best_precision = -1.0
+best_epoch = 0
+for idx, mod in enumerate(models):
+
+    if epochs[idx] < epoch_range_lower or epochs[idx] > epoch_range_upper:
+        continue
+
+    print(mod)
+    model = load_model(mod, custom_objects={"binary_focal_loss_fixed": binary_focal_loss()})
+
+    # Get predictions of the current model
+    start_time = time()
+    if num_outputs == 1:
+        y_pred = model.predict_generator(generator=evaluation_generator)[:, 0]
+    else:
+        y_pred = model.predict_generator(generator=evaluation_generator)[:, 1]
+    duration = (time() - start_time)
+    unit = "seconds"
+
+    if duration >= 3600.0:
+        duration /= 3600.0
+        unit = "hours"
+    elif duration >= 60.0:
+        duration /= 60.0
+        unit = "minutes"
+    print("Time needed for {} epochs: {:0.4f} {}".format(evaluation_generator.__len__(), duration, unit))
+
+    # Compute average precision and plot precision-recall-curve
+    average_precision = average_precision_score(evaluation_generator.get_classes(), y_pred)
+
+    if best_precision < 0.0 or average_precision > best_precision:
+        best_precision = average_precision
+        y_pred_best = np.copy(y_pred)
+        best_epoch = epochs[idx]
+
+    K.clear_session()  # clear gpu memory
+
+# Create plots for best model
+precisions, recalls, thresholds = precision_recall_curve(evaluation_generator.get_classes(), y_pred_best)
+plt.step(recalls, precisions, color="b", alpha=0.2, where="post")
+plt.fill_between(recalls, precisions, color="b", alpha=0.2, step="post")
+plt.xlabel("Recall")
+plt.ylabel("Precision")
+plt.ylim([0.0, 1.05])
+plt.xlim([0.0, 1.0])
+plt.title("Binary Precision-Recall Curve: AP={:0.4f}".format(best_precision))
+plt_path = os.path.join(plots_path, "precision_recall_{:03d}.pdf".format(best_epoch))
+plt.savefig(plt_path)
+plt.clf()
+
+# Find threshold for precision-recall plot
+if not test_run:
+    current_recall = 0.0
+    for idx, precision in enumerate(precisions):
+        if precision >= wanted_min_precision and recalls[idx] > current_recall:
+            current_recall = recalls[idx]
+            chosen_threshold = thresholds[idx]
+
+y_pred = (y_pred_best + (1.0 - chosen_threshold)).astype(np.int8)  # round array entries according to threshold
+
+# Save classification performance
+print("Classification Report - Epoch {} - Threshold: {:.6f}".format(best_epoch, chosen_threshold))
+target_names = ["Bad Grasps", "Good Grasps"]
+print(classification_report(evaluation_generator.get_classes(), y_pred, target_names=target_names))
+plt_path = os.path.join(plots_path, "confusion_matrix_{}_{}.pdf".format(best_epoch, int(chosen_threshold*100)))
+skplt.metrics.plot_confusion_matrix(evaluation_generator.get_classes(), y_pred, figsize=(8, 8))
+plt.title("Confusion Matrix - Epoch {} - Threshold {:.6f}".format(best_epoch, chosen_threshold))
+plt.savefig(plt_path)

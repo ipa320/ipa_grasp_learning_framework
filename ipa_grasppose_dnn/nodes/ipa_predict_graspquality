@@ -1,0 +1,31 @@
+# This file is part of ipa_grasppose_dnn.
+# Copyright (C) 2021  Marc Riedlinger
+
+# ipa_grasppose_dnn is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#!/usr/bin/env python
+
+import rospy
+from ipa_grasppose_dnn import PredictGraspQuality
+
+
+predict_params = {"model_filepath": "/home/rmb-mr/.ros/models/session_13/model_028.h5",
+                  "depth_image_dim": [64, 64, 1],  # the same as in training
+                  "grasp_data_dim": [8, 8, 4]}  # the same as in training
+
+
+if __name__ == "__main__":
+    rospy.init_node("ipa_predict_graspquality")
+    predictor = PredictGraspQuality(predict_params)
+    rospy.spin()

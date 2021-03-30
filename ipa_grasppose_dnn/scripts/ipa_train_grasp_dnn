@@ -1,0 +1,45 @@
+# This file is part of ipa_grasppose_dnn.
+# Copyright (C) 2021  Marc Riedlinger
+
+# ipa_grasppose_dnn is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#!/usr/bin/env python
+
+from ipa_grasppose_dnn import train_model
+
+
+# Parameters for training
+generator_params = {"depth_image_dim": [64, 64, 1],
+                    "grasp_data_dim": [8, 8, 4],  # first two elements have to match shape[1:3] last layer of CNN tower
+                    "batch_size": 192,
+                    "sample_class": -1,  # can be used for up-/downsampling, -1 turns it off
+                    "sample_ratio": 1.0,  # sampled class will have sample_ratio*other_class_size samples
+                    "sample_seed": 65536,  # used for creating up-/downsampled set -> reproducibility
+                    "shuffle": True}
+
+databases = {"training": "/home/rmb-mr/.ros/grasp_database_processed/training",
+             "validation": "/home/rmb-mr/.ros/grasp_database_processed/validation"}
+
+# file_path can either be a directory or a specific model file
+# When it is a directory (will be created if non-existing), a new training will be started with a new session subfolder
+# In case of a specific file is given, it will be loaded and the training will be continued:
+# E.g. "file_path": "/home/rmb-mr/.ros/models/session_1/model_001.h5"
+train_params = {"file_path": "/home/rmb-mr/.ros/models",
+                "final_epoch": 30,
+                "start_saving_epoch": 10,
+                "start_lr": 0.00001} #0.0009 (512), 0.00001 (adam)
+
+
+if __name__ == "__main__":
+    train_model(databases, generator_params, train_params)

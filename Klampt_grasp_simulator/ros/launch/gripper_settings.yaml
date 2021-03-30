@@ -1,0 +1,63 @@
+# The name of the gripper interface that shall be loaded.
+# The name has to match any of the entries in the GripperInterfaceBase::createGripperInterfaceByName() method.
+# Type: std::string
+gripper_interface_name: "cob4_old"
+
+# Names of frames of the gripper that are responsible for opening/closing
+# Format: [joint1_name, joint2_name, ...]
+# Type: std::vector<std::string>
+gripper_finger_frames: ["cob4_gripper_finger_1_link", "cob4_gripper_finger_2_link"]
+
+# Configuration of opened gripper
+# Format: [joint1, joint2, ...]
+# Type: std::vector<double>
+gripper_open_config: [-1.0, 1.2]
+
+# Configuration of fully closed gripper
+# Format: [joint1, joint2, ...]
+# Type: std::vector<double>
+gripper_closed_config: [0.8, -0.6]
+
+# Threshold until which the gripper closes its fingers [in N]. If any finger link reaches the threshold, the closing process stops.
+# Range: [0, inf)
+# Type: double
+contact_force_threshold: 20
+
+# Name of the frame of the gripper that is matched to the desired poses
+# Type: std::string
+gripper_grasp_frame_name: "cob4_gripper_grasp_link"
+
+# Grasp position vector relative to the grasp frame which defines the position the gripper aligns with the grasp pose of an object.
+# Type: std::vector<double>
+grasp_point_position: [0, 0, 0]
+
+# Vector in the grasp frame that shall be used to align the gripper to the inverted normal vector of each grasp pose (i.e. the vector that points towards the surface).
+# The vector is so to say the direction (in relation to the grasp frame) in which the gripper can perform a grasp.
+# This vector does not have to be normalized.
+# Type: std::vector<double>
+grasp_direction_vector: [1, 0, 0]  # take x-axis of grasp frame here
+
+# Vector in the intermediate frame coordinates which is used to achieve a second alignment.
+# The intermediate frame results from the alignment of the grasp direction vector with the inverted normal (and its sampled candidates).
+# This vector will afterwards be aligned such that it matches a direction vector which results from a pca of the point cloud data.
+# This second alignment is optional and can be turned off by a 0-vector.
+# This vector does not have to be normalized.
+# Type: std::vector<double>
+gripper_alignment_vector: [0, 0, 1]  # align z-axis with main PCA axis
+
+# Shifts the pre grasp position of the gripper along the surface normal away from the actual grasp position [in m].
+# Absolute value will be taken to force positive values.
+# Type: double
+pre_grasp_offset: 0.35
+
+# Time the gripper will be forced to drive from pre grasp pose to the grasp pose.
+# This should not be too fast to avoid unnecessary collisions with the object.
+# Type: double
+object_approaching_move_time: 1.5
+
+# Global timeout for all gripper movements (open/close/move) after which the current movement will be aborted and the respective grasp pose skipped.
+# If possible, the next grasp pose will be taken into consideration.
+# This is an extra safety measure to aid the internal stuck detection.
+# Timeout is given in seconds.
+# Type: double
+global_gripper_movement_timeout: 15.0

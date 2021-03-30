@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+	<name>ipa_grasppose_dnn</name>
+	<version>1.0.0</version>
+	<description>This package contains code to train a neural network on grasp-related data and create a ros service for inference.</description>
+
+	<maintainer email="m.riedlinger@live.de">Marc Riedlinger</maintainer>
+	<license>GPL</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<depend>cv_bridge</depend>  <!-- also pulls in correct opencv dependency -->
+	<depend>geometry_msgs</depend>
+	<depend>ipa_grasppose_srvs</depend>
+	<depend>roslib</depend>
+	<depend>rospy</depend>
+	<depend>sensor_msgs</depend>
+
+</package>

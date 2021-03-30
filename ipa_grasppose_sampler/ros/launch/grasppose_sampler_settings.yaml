@@ -1,0 +1,39 @@
+# Parameters that are used to sample further grasp poses around a surface normal in a conical fashion.
+# This is the first method utilized to generate further grasp pose candidates out of a surface normal.
+# Format: [theta_start, theta_step, theta_stop,
+#          phi_start, phi_step, phi_end]
+# The cone parameters span a cone around each surface normal in which further candidates are sampled.
+# The cone is opened in direction of the surface normal while its peak lies on the object's surface.
+# Hint: [0.0, 1.0, 0.0] as theta range disables conical sampling
+# cone_theta_start: Start cone theta angle [0,pi/2]
+# cone_theta_step: Increment of cone theta
+# cone_theta_end: End cone theta angle [0,pi/2]
+# cone_phi_start: Start cone phi angle [-pi,pi]
+# cone_phi_step: Increment of cone phi
+# cone_phi_end: End cone phi angle [-pi,pi]
+conical_sampling: [0.5, 1.0, 0.5, #[0.0, 1.0, 0.0,
+                   -3.14, 2.094, 1.048]
+                   #-3.14, 1.57, 1.57]
+
+# Samples further grasp pose candidates in a circle around each grasp direction vector.
+# This means the gripper will be rolled around its grasp direction vector to cover more poses.
+# This is the second method utilized to generate more grasp pose candidates out of a surface normal and its conical candidates.
+# Format: [gamma_start, gamma_step, gamma_end]
+# Hint: [0.0, 1.0, 0.0] disables circular sampling
+# gamma_start: Start gamma angle [0,pi*2]
+# gamma_step: Increment of gamma
+# gamma_end: End gamma angle [0,pi*2]
+# Type: std::vector<double>
+circular_sampling: [0, 0.785, 2.355] #[0.0, 1.0, 0.0]
+
+# Sample grasp poses shifted along the grasp direction line relative to the object surface.
+# This is the last method utilized to generate even more grasp pose candidates out of all candidates from previous methods.
+# Format: [depth_start, depth_step, depth_end]
+# Positive values will shift the grasp pose inside the object's surface (in direction of the assigned grasp direction vector), whereas negative values will shift it away from the surface.
+# The values are given in meters.
+# Hint: A depth value of zero means the grasp pose will lie on the object's surface.
+# depth_start: Start value of the depth sampling.
+# depth_step: Increment value which will be added to the start_value in a loop.
+# depth_end: End value of the loop.
+# Type: std::vector<double>
+grasp_depth_sampling: [-0.02, 0.04, 0.02] #[0.0, 1.0, 0.0]

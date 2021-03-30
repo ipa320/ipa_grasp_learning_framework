@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<!-- Start ipa_graspdata_processor node -->
+	<include file="$(find ipa_graspdata_processor)/ros/launch/graspdata_processor.launch" />
+
+	<!-- Start ipa_grasp_pose_manager node -->
+	<node ns="ipa_graspdata_manager" name="ipa_graspdata_manager" pkg="ipa_graspdata_manager" type="ipa_graspdata_manager" output="log" >
+		<rosparam command="load" file="$(find ipa_graspdata_manager)/ros/launch/graspdata_manager_settings.yaml" />
+	</node>
+
+</launch>

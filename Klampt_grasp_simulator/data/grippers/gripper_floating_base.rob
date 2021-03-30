@@ -1,0 +1,60 @@
+links "tx" "ty" "tz" "rz" "ry" "rx"
+
+TParent 1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 
+
+parents	-1 0 1 2 3 4
+
+axis	1 0 0	0 1 0	0 0 1	0 0 1	0 1 0	1 0 0
+
+
+jointtype	p p p r r r
+
+qmin	-5 -5 -5 -inf -inf -inf
+qmax	5 5 5 inf inf inf
+
+q	0 0 0 0 0 0
+
+geometry	"" "" "" "" "" ""
+
+mass	0.01 0.01 0.01 0.01 0.01 0.01
+
+com	0 0 0	0 0 0	0 0 0	0 0 0	0 0 0	0 0 0
+
+inertia	0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 
+
+torqueMax  500 500 500 50 50 50
+
+accMax     8 8 8 8 8 8
+
+velMax     4 4 4 6 6 6
+
+joint normal 0
+joint normal 1
+joint normal 2
+joint spin 3
+joint spin 4
+joint spin 5
+
+driver normal 0 
+driver normal 1
+driver normal 2
+driver normal 3
+driver normal 4
+driver normal 5
+
+servoP 5000 5000 5000 500 500 500
+servoI 10 10 10 0.5 0.5 0.5
+servoD 10 10 10 0.5 0.5 0.5
+
+viscousFriction 50 50 50 50 50 50
+dryFriction 1 1 1 1 1 1

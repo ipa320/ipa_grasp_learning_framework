@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<world>
+
+    <!-- The gripper --> 
+    <robot name="cob4-sdhx" file="../grippers/cob4_gripper_floating.rob" translation="0 0 0" config="12 0 0 0.2 0 0 0 0 0 0 0 0 0" >
+	</robot>
+
+	<!-- The camera -->
+	<robot name="rgbd-camera" file="../cameras/camera_floating_simple.rob" translation="0 0 0.5" >
+		<sensors>
+			<JointPositionSensor name="encoders" /> <!-- suppress warnings -->
+			<!-- <CameraSensor name="rgbd_camera" link="0" Tsensor="1 0 0  0 1 0  0 0 1   0 0 0"  xres="256" yres="128" xfov="1.05" yfov="0.6" zmin="0.4" zmax="2.0" zresolution="0.01" zvarianceLinear="0.00001" /> -->
+			<!-- ASUS Xtion Pro <CameraSensor name="rgbd_camera" link="0" Tsensor="1 0 0  0 1 0  0 0 1   0 0 0"  xres="640" yres="480" xfov="1.0123" yfov="0.7854" zmin="0.8" zmax="3.5" zresolution="0.01" zvarianceLinear="0.00001" /> -->
+			<CameraSensor name="rgbd_camera" link="0" Tsensor="1 0 0  0 1 0  0 0 1   0 0 0"  xres="320" yres="240" xfov="1.0123" yfov="0.7854" zmin="0.3" zmax="1.3" zresolution="0.01" zvarianceLinear="0.00001" />
+		</sensors>
+	</robot>
+
+    <!-- The ground plane --> 
+    <terrain file="/home/rmb-mr/Programs/Klampt/Klampt-examples/data/terrains/block.off" scale="0.05 0.05 0.3" translation="0.7 0 0" >
+		<display color="0 1 0"/>
+	</terrain>
+
+	<!-- Klampt simulation parameters -->
+	<simulation>
+		<globals maxContacts="50" />
+	</simulation>
+
+</world>

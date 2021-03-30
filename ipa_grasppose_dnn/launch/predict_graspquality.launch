@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<!-- Start ipa_graspdata_processor node -->
+	<include file="$(find ipa_graspdata_processor)/ros/launch/graspdata_processor.launch" />
+
+	<!-- Start ipa_predict_graspquality node -->
+	<node ns="ipa_grasppose_dnn" name="ipa_grasppose_dnn" pkg="ipa_grasppose_dnn" type="ipa_predict_graspquality" output="screen" />
+
+</launch>

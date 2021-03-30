@@ -1,0 +1,8 @@
+float64 normal_search_radius
+float32 downsampling_voxel_leaf_size
+sensor_msgs/PointCloud2 point_cloud
+geometry_msgs/Pose target_to_camera_transform
+geometry_msgs/Point grasp_direction_vector_grasp_frame
+geometry_msgs/Point gripper_alignment_vector_grasp_frame
+---
+geometry_msgs/Pose[] grasp_poses_target_frame

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<!-- Start ipa_grasp_pose_sampler node -->
+	<node ns="ipa_grasppose_sampler" name="ipa_grasppose_sampler" pkg="ipa_grasppose_sampler" type="ipa_grasppose_sampler" output="log" >
+		<rosparam command="load" file="$(find ipa_grasppose_sampler)/ros/launch/grasppose_sampler_settings.yaml" />
+	</node>
+
+</launch>

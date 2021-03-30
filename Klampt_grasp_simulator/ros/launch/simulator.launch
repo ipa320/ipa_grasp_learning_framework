@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<arg name="world" default="world.xml" />	<!-- xml world file that's being used in simulation -->
+
+	<!-- Start ipa_grasppose_sampler node -->
+	<include file="$(find ipa_grasppose_sampler)/ros/launch/grasppose_sampler.launch" />
+
+	<!-- Start ipa_graspdata_manager node -->
+	<include file="$(find ipa_graspdata_manager)/ros/launch/graspdata_manager.launch" />
+
+	<!-- Start Klampt_grasp_simulator node -->
+	<node ns="Klampt_grasp_simulator" name="Klampt_grasp_simulator" pkg="Klampt_grasp_simulator" type="Klampt_grasp_simulator" output="log" >
+		<param name="world" value="$(find Klampt_grasp_simulator)/data/worlds/$(arg world)" />
+		<param name="objects" value="$(find Klampt_grasp_simulator)/data/objects/kit/" />
+		<rosparam command="load" file="$(find Klampt_grasp_simulator)/ros/launch/simulator_settings.yaml" />
+		<rosparam command="load" file="$(find Klampt_grasp_simulator)/ros/launch/gripper_settings.yaml" />
+	</node>
+
+</launch>

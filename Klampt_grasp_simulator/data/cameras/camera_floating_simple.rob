@@ -1,0 +1,30 @@
+links	"camera_link"
+
+parents	-1
+
+axis	1 0 0
+
+jointtype	p
+
+Tparent	4.89664e-12 4.89658e-12 1	-1 0 4.89658e-12	5.55112e-17 -1 4.89664e-12	0 0 0 \
+
+q	0
+
+qmin	0
+qmax	0
+
+geometry	""
+
+mass	0.001
+
+com	0 0 0
+
+inertia	0.001 0 0 0 0.001 0 0 0 0.001 \
+
+torquemax	inf
+velmax	0
+accmax	0
+
+joint weld 0
+
+

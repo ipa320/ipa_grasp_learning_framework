@@ -1,0 +1,6 @@
+string object_name
+uint64 view_counter
+sensor_msgs/Image depth_image
+geometry_msgs/Pose[] grasp_poses_camera_frame
+uint8[] grasp_poses_evaluations
+---

@@ -1,0 +1,80 @@
+links "tx" "ty" "tz" "rz" "ry" "rx" "cob4_gripper_base_link" "cob4_gripper_grasp_link" "cob4_gripper_palm_link" "cob4_gripper_camera_link" "cob4_gripper_finger_1_link" "cob4_gripper_finger_2_link" 
+
+TParent 1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+1 0 0   0 1 0   0 0 1   0 0 0 \
+4.89664e-12 0 1	0 1 0	-1 0 4.89664e-12	0 0 0 \
+4.89664e-12 -0 -1	0 1 -0	1 0 4.89664e-12	0 0 0.11 \
+1 0 0	0 1 0	0 0 1	0 0 0 \
+4.89664e-12 0 1	0 1 0	-1 0 4.89664e-12	0 0 0 \
+0.980067 0.198669 0	-0.198669 0.980067 -0	-0 0 1	-0.04409 0.02163 0 \
+0.955336 -0.29552 0	0.29552 0.955336 0	0 0 1	-0.0712 0 0
+
+parents	-1 0 1 2 3 4 5 6 6 8 9 10 
+
+axis	1 0 0	0 1 0	0 0 1	0 0 1	0 1 0	1 0 0	0 0 1	0 0 1	0 0 1	0 0 1	0 0 1	0 0 1	
+
+
+jointtype	p p p r r r r r r r r r 
+
+qmin	-5 -5 -5 -inf -inf -inf 0 0 0 0 -1.1 -1.57
+qmax	5 5 5 inf inf inf 0 0 0 0 0.9 1.57
+
+q	0 0 0 0 0 0 0 0 0 0 0 0 
+
+geometry	"" "" "" "" "" "" "" "" "resources/cob4_gripper_palm_link.off" "" "resources/cob4_gripper_finger_1_link.off" "resources/cob4_gripper_finger_2_link.off" 
+
+mass	0.01 0.01 0.01 0.01 0.01 0.01 0 0 0.4 0 0.1 0.1 
+
+com	0 0 0	0 0 0	0 0 0	0 0 0	0 0 0	0 0 0	0 0 0	0 0 0	0 -0.03 0.02	0 0 0	-0.02 0 0	-0.02 0 0	 
+
+inertia	0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0.001 0 0 0 0.001 0 0 0 0.001 \
+0 0 0 0 0 0 0 0 0 \
+0 0 0 0 0 0 0 0 0 \
+0.2 0 0 0 0.2 0 0 0 0.2 \
+0 0 0 0 0 0 0 0 0 \
+0.05 0 0 0 0.05 0 0 0 0.05 \
+0.05 0 0 0 0.05 0 0 0 0.05
+
+torqueMax  500 500 500 50 50 50 inf inf inf inf 200 200
+
+accMax     8 8 8 8 8 8 0 0 0 0 2 2
+
+velMax     4 4 4 6 6 6 0 0 0 0 1 1
+
+joint normal 0
+joint normal 1
+joint normal 2
+joint spin 3
+joint spin 4
+joint spin 5
+joint weld 6
+joint weld 7
+joint normal 8
+joint weld 9
+joint normal 10
+joint normal 11
+
+driver normal 0 
+driver normal 1
+driver normal 2
+driver normal 3
+driver normal 4
+driver normal 5
+driver normal 10
+driver normal 11
+
+servoP 5000 5000 5000 500 500 500 100 100
+servoI 10 10 10 0.5 0.5 0.5 0.1 0.1
+servoD 10 10 10 0.5 0.5 0.5 0.1 0.1
+
+viscousFriction 50 50 50 50 50 50 10 10
+dryFriction 1 1 1 1 1 1 1 1

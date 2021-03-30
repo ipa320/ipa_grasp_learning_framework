@@ -1,0 +1,35 @@
+# Folder relative to .ros which will be created on startup and used to store raw grasp related data (raw database) or to load previously stored raw data (for offline processing).
+# Type: std::string
+raw_storage_folder_path: "grasp_database_raw"
+
+# Folder relative to .ros which will be created to store the processed grasp related data (processed database).
+# This will only be done if either online_data_processing or process_raw_database is set to true.
+# If the folder already exists a new one will be generated with an appropriate tag.
+# Type: std::string
+processed_storage_folder_path: "grasp_database_processed"
+
+# Decides whether to also process and save the grasp data into a NN compatible format in parallel (online) along with the creation of the raw database.
+# This has only an effect when the process_raw_database flag is false.
+# Hint: On crash this does not recover well since every start generates a new processed_storage_folder_path. Use offline processing instead.
+# Type: bool
+online_data_processing: false
+
+# This flag allows to process and save the data of a pre-built raw database.
+# The raw data will be read from raw_storage_folder_path and saved in processed_storage_folder_path.
+# The flag is set in the offline launch file.
+# Type: bool
+#process_raw_database: false
+
+# Split raw data in chunks of maximally the specified size and process these chunks sequentially.
+# This helps to reduce the data load that has to be processed at once.
+# Each chunk defines the amount of grasp poses that will be processed in one iteration.
+# Setting it to 0 disables this feature.
+# In case of use_crop_cuboid is set to true in the processor service, this setting has no effect to avoid processing and saving the same depth patch several times.
+# The value will be forced to be greater-equal to 0.
+# Type: int
+processing_max_chunk_size: 0
+
+# This flag prevents the processed data from being saved to drive. It can be useful when the data is just wanted to be visualized using a processor node.
+# This only works for offline processing.
+# Type: bool
+no_processed_data_saving: false

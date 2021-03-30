@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+	<name>Klampt_grasp_simulator</name>
+	<version>1.0.0</version>
+	<description>The package provides all necessary files for simulating grasps. The simulator is based on Klampt version 0.8.1.</description>
+
+	<maintainer email="m.riedlinger@live.de">Marc Riedlinger</maintainer>
+	<license>GPL</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<depend>geometry_msgs</depend>
+	<depend>ipa_grasppose_srvs</depend>
+	<depend>Klampt</depend>
+	<depend>roscpp</depend>
+	<depend>roslib</depend>
+	<depend>sensor_msgs</depend>
+
+</package>

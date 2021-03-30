@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<!-- Start ipa_grasp_pose_processor node -->
+	<node ns="ipa_graspdata_processor" name="ipa_graspdata_processor_offline" pkg="ipa_graspdata_processor" type="ipa_graspdata_processor" output="screen" >
+		<rosparam command="load" file="$(find ipa_graspdata_processor)/ros/launch/graspdata_processor_settings.yaml" />
+	</node>
+
+</launch>

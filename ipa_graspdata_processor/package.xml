@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+	<name>ipa_graspdata_processor</name>
+	<version>1.0.0</version>
+	<description>The package processes grasp related data to convert it to a format a neural network can learn from.</description>
+
+	<maintainer email="m.riedlinger@live.de">Marc Riedlinger</maintainer>
+	<license>LGPL</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<depend>cv_bridge</depend>
+	<depend>geometry_msgs</depend>
+	<depend>ipa_grasppose_srvs</depend>
+	<depend>roscpp</depend>
+	<depend>roslib</depend>
+	<depend>sensor_msgs</depend>
+	<depend>std_msgs</depend>
+	<depend>visualization_msgs</depend>
+
+</package>

@@ -1,0 +1,8 @@
+sensor_msgs/Image depth_image
+geometry_msgs/Pose[] grasp_poses_camera_frame
+bool use_crop_cuboid_center
+geometry_msgs/Point crop_cuboid_center_camera_frame
+geometry_msgs/Vector3 crop_cuboid_side_lengths
+---
+sensor_msgs/Image[] depth_patches
+geometry_msgs/Pose[] normalized_grasp_poses

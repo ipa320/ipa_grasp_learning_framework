@@ -1,0 +1,238 @@
+# List of graspable objects that can be found in the objects path as defined in the simulator.launch file
+# x, y and z [in m] describe the spawn position while yaw, pitch and roll [in rad] define the initial rotation (in ZYX format [first around yaw, then pitch, then roll])
+# The internal object name will be generated from the file_name (without extension) and is used to save the generated data to the drive, but can also be set using the forced_object_name setting.
+# forced_object_name has to be used when the same object (hence same file_name) will be loaded several times (e.g. with a different pose).
+# Format: [file_name, name_tag, camera_flight_index, x, y, z, yaw, pitch, roll]
+# Type: std::vector<std::string>
+graspable_objects: [ #"Amicelli_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"BakingVanilla_800.obj", "", "2", "0.7", "0", "0.1", "0", "0", "0",
+                    #"BathDetergent_800.obj", "", "0", "0.7", "0", "0.17", "0", "0", "0",
+                    #"BlueSaltCube_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"BlueSaltCube_800.obj", "_rotated", "1", "0.7", "0", "0.1", "0.7854", "0", "0",
+                    #"BroccoliSoup_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"CatLying_800.obj", "", "4", "0.7", "0", "0.1", "0", "0", "0",
+                    #"ChocoIcing_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"ChocoIcing_800.obj", "_rotated", "0", "0.7", "0", "0.1", "0", "0", "3.1416",
+                    #"ChocolateBars_800.obj", "", "3", "0.7", "0", "0.1", "0", "0", "0",
+                    ##"ChocSticks2_800.obj", "", "0", "0.7", "0", "0.08", "0", "0", "0",
+                    #"ChoppedTomatoes_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Clown_800.obj", "", "4", "0.7", "0", "0.1", "0", "0", "0",
+                    #"CoffeeBox_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"CoffeeBox_800.obj", "_rotated", "0", "0.7", "0", "0.1", "0.7854", "0", "0",
+                    #"CoffeeCookies_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"CoffeeFilters_800.obj", "", "1", "0.7", "0", "0.15", "0", "0", "0",
+                    #"CokePlasticLarge_800.obj", "", "2", "0.7", "0", "0.2", "0", "0", "0",
+                    #"CokePlasticSmall_800.obj", "", "0", "0.7", "0", "0.15", "0", "0", "0",
+                    #"CondensedMilk_800.obj", "", "3", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Curry_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    ##"DanishHam_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Deodorant_800.obj", "", "0", "0.7", "0", "0.08", "0", "0", "0",
+                    #"Dog_800.obj", "", "4", "0.7", "0", "0.12", "0", "0", "0",
+                    #"Dwarf_800.obj", "", "4", "0.7", "0", "0.15", "0", "0", "0",
+                    #"Fish_800.obj", "", "4", "0.7", "0", "0.1", "0", "0", "0",
+                    #"FizzyTablets_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"FlowerCup_800.obj", "", "5", "0.7", "0", "0.1", "0", "0", "0",
+                    ##"FruitBars_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"FruitDrink_800.obj", "", "3", "0.7", "0", "0.1", "0", "0", "0",
+                    #"FruitTea_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Glassbowl_800.obj", "", "2", "0.7", "0", "0.1", "0", "0", "0",
+                    #"GreenCup_800.obj", "", "5", "0.7", "0", "0.1", "0", "0", "0",
+                    #"GreenCup_800.obj", "_rotated", "1", "0.7", "0", "0.1", "0", "0", "3.1416",
+                    #"GreenSaltCylinder_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"HamburgerSauce_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"HamburgerSauce_800.obj", "_rotated", "1", "0.7", "0", "0.1", "0", "0", "3.1416",
+                    #"HerbSalt_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    ##"HeringTin_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"HygieneSpray_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"InstantSauce_800.obj", "_rotated", "1", "0.7", "0", "0.1", "0.7854", "0", "0",
+                    #"InstantSoup_800.obj", "", "5", "0.7", "0", "0.1", "0", "0", "0",
+                    #"JamSugar_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"KnaeckebrotRye_800.obj", "_rotated", "1", "0.7", "0", "0.1", "0.7854", "0", "0",
+                    #"KoalaCandy_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"LivioClassicOil_800.obj", "", "4", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Margarine_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"MelforBottle_800.obj", "", "1", "0.7", "0", "0.15", "0", "0", "0",
+                    #"NutellaGo_800.obj", "", "3", "0.7", "0", "0.1", "0", "0", "0",
+                    #"OrangeMarmelade_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Peanuts_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Pitcher_800.obj", "", "5", "0.7", "0", "0.15", "0", "0", "0",
+                    "Pony_800.obj", "", "4", "0.7", "0", "0.1", "0", "0", "0",
+                    "PotatoeDumplings_800.obj", "", "1", "0.7", "0", "0.1", "0.7854", "0", "0",
+                    "RedCup_800.obj", "", "5", "0.7", "0", "0.1", "0", "0", "0",
+                    "RedCup_800.obj", "_rotated", "1", "0.7", "0", "0.1", "0", "0", "3.1416",
+                    "SauceThickener_800.obj", "", "2", "0.7", "0", "0.1", "0", "0", "0",
+                    "Shampoo_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    "Shampoo_800.obj", "_rotated", "1", "0.7", "0", "0.16", "0", "0", "3.1416",
+                    "ShowerGel_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    "ShowerGel_800.obj", "_rotated", "1", "0.7", "0", "0.12", "0", "0", "3.1416",
+                    "SmallGlass_800.obj", "", "2", "0.7", "0", "0.1", "0", "0", "0",
+                    "SmallGlass_800.obj", "_rotated", "0", "0.7", "0", "0.1", "0", "0", "3.1416",
+                    "SoftCheese_800.obj", "", "2", "0.7", "0", "0.1", "0", "0", "0"]
+                    #"Sprayflask_800.obj", "", "3", "0.7", "0", "0.2", "0", "0", "0",
+                    #"Sprudelflasche_800.obj", "", "2", "0.7", "0", "0.2", "0", "0", "0",
+                    #"TomatoHerbSauce_800.obj", "", "3", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Toothpaste_800.obj", "", "3", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Tortoise_800.obj", "", "4", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Wafflerolls_800.obj", "", "1", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Waterglass_800.obj", "", "2", "0.7", "0", "0.1", "0", "0", "0",
+                    #"Waterglass_800.obj", "_rotated", "0", "0.7", "0", "0.1", "0", "0", "3.1416",
+                    #"WhippedCream_800.obj", "", "0", "0.7", "0", "0.15", "0", "0", "0",
+                    #"Wineglass_800.obj", "", "2", "0.7", "0", "0.12", "0", "0", "0",
+                    #"Wineglass_800.obj", "_rotated", "0", "0.7", "0", "0.12", "0", "0", "3.1416",
+                    #"YellowSaltCylinder_800.obj", "", "0", "0.7", "0", "0.1", "0", "0", "0"]
+
+# Index of the robot in the world file that corresponds to the gripper.
+# Type: int
+gripper_index: 0
+
+# Whether to create a graphical visualization of the simulation or not
+# Type: boolean
+create_gui: true
+
+# Index of the robot in the world file that corresponds to the camera.
+# Type: int
+camera_index: 1
+
+# List of camera flights that are going to be loaded in the simulation.
+# The indexes of the entries are used in the graspable_objects list to assign each object an own camera flight.
+# Type: std::vector<std::string>
+active_camera_flights: ["camera_flight_1_view", "camera_flight_2_views", "camera_flight_2_views_top", "camera_flight_3_views", "camera_flight_4_views", "camera_flight_4_views_top"]
+
+# Spherical flight of the rgb-d camera around the object spawn position (given in graspable_objects list).
+# Generates spheres with the given parmeters in spherical coordinates (radius, phi and theta angle).
+# Phi equals to the azimuthal angle and theta equals to the polar angle of a spherical coordinate system.
+# The gamma angle defines the rotation around the camera's optical line (roll).
+# The camera will be placed at each spherical coordinate and centered at the current object to observe.
+# If radius_start==radius_end only one sphere will be generated around the object, otherwise there will be several.
+# radius_start: Start radius of sphere
+# radius_step: Increment of radius (from start to end)
+# radius_end: End radius sphere
+# phi_start: Start phi angle [-pi,pi]
+# phi_step: Increment of phi
+# phi_end: End phi angle [-pi,pi]
+# theta_start: Start theta angle [0,pi]
+# theta_step: Increment of theta
+# theta_end: End theta angle [0,pi]
+# gamma_start: Start gamma angle [0,2*pi]
+# gamma_step: Increment of gamma
+# gamma_end: End gamma angle [0,2*pi]
+# Format: [radius_start, radius_step, radius_stop,
+#          phi_start, phi_step, phi_end,
+#          theta_start, theta_step, theta_end,
+#          gamma_start, gamma_step, gamma_end]
+# Type: std::vector<double>
+camera_flight_1_view: [0.5, 1.0, 0.5,
+                       -3.14, 1.57, -3.14,
+                       0.8, 1.0, 0.8,
+                       0.0, 1.0, 0.0]
+
+camera_flight_2_views: [0.5, 1.0, 0.5,
+                        -3.14, 1.57, -1.57,
+                        0.8, 1.0, 0.8,
+                        0.0, 1.0, 0.0]
+
+camera_flight_2_views_top: [0.5, 1.0, 0.5,
+                            -3.14, 1.57, -3.14,
+                            0.0, 0.8, 0.8,
+                            0.0, 1.0, 0.0]
+
+camera_flight_3_views: [0.5, 1.0, 0.5,
+                        -3.14, 1.57, 0.0,
+                        0.8, 1.0, 0.8,
+                        0.0, 1.0, 0.0]
+
+camera_flight_4_views: [0.5, 1.0, 0.5,
+                        -3.14, 1.57, 1.57,
+                        0.8, 1.0, 0.8,
+                        0.0, 1.0, 0.0]
+
+camera_flight_4_views_top: [0.5, 1.0, 0.5,
+                            -3.14, 1.57, -1.57,
+                            0.0, 0.8, 0.8,
+                            0.0, 1.0, 0.0]
+
+# Perspective augmentation. Sample further camera perspectives around each camera flight pose using spherical coordinates (phi, theta)
+# using the same (already evaluated) grasp poses as the original camera flight pose.
+# This helps to diversify the depth images in the resulting dataset without having a huge impact on simulation time.
+# The delta theta angle is used as angular deviation from the optical line of the original camera's pose.
+# The delta phi angle samples the delta theta deviation around the optical line in a circle creating a cone with the original optical line as center.
+# The delta gamma angle defines the defines a rolling around the camera's optical line of the original pose and its new candidate poses.
+# The delta theta angle will be split in equal subdivisions.
+# The delta phi and the delta gamma angles are always sampled in a full circle [0,2*pi), only its subdivisions can be specified.
+# delta_theta: Delta theta [0,pi/4] which defines the deviation angle from the original camera pose's optical line.
+# delta_theta subdivisions: Split delta_theta in equal parts
+# delta_phi subdivisions: Split delta_phi in equal parts
+# delta_gamma subdivisions: Split delta_gamma in equal parts
+# Format: [delta_angle, delta_angle subdivisions, delta_phi subdivisions, delta_gamma subdivisions]
+# Type: std::vector<double>
+perspective_augmentation_angles: [0.78, 3.0,
+                                  5.0, 5.0]
+
+# Turns on/off perspective augmentation.
+# Type: bool
+use_perspective_augmentation: true
+
+# Whether to apply a bounding box (of the current object) filter to segment the point cloud.
+# This can be used to filter out the world geometry and the gripper.
+# Type: bool
+use_boundingbox_filter: true
+
+# Whether to apply a color filter with the given rgb colors (which will be converted to hsv representation) to segment the point cloud.
+# This can be used to filter out the world geometry of the given color.
+# Type: bool
+use_color_filter: true
+
+# Color in red, green, blue format which is used as color filter on the point cloud of the rgbd camera.
+# Format: [red, green, blue], each in the range of [0,255]
+# Type: std::vector<int>
+rgb_filter: [0, 255, 0]
+
+# Similarity measure in hsv color space. Colors that are similar (fulfilling the deviation values for all parameters) to the rgb_filter will be discarded from the point cloud as well.
+# Format: [allowed_hue_deviation in degree, allowed_saturation_deviation in percent, allowed_value_deviation in percent]
+# Range: [0-360, 0-1, 0-1]
+# Type: std::vector<double>
+allowed_deviation_hsv: [10.0, 0.35, 0.9]
+
+# The normal vector of a plane in world coordinates. This vector is used to filter out all grasp directions that come from below the plane this vector defines (hemispherical filter).
+# The filter can be turned off by setting all values to 0.
+# This vector does not have to be normalized.
+# Type: std::vector<double>
+plane_normal_filter_world: [0, 0, 1]  # the z-axis of the world frame
+
+# Defines the radius [in m] in which point cloud points will be taken to compute the normals (setting in grasppose sampler service).
+# Type: double
+normal_search_radius: 0.01
+
+# Defines the side of a voxel [in m] that are used to downsample the original point cloud to reduce the amount of normals and for PCA (setting in grasppose sampler service).
+# Setting this to 0 disables downsampling.
+# Type: float
+downsampling_voxel_leaf_size: 0.02
+
+# Folder path relative to .ros folder which is used to save the simulation data to.
+# Type: string
+storage_folder_path: "Klampt_grasp_simulator"
+
+# Draw the gripper's grasp frame in the simulation.
+# Type: bool
+draw_gripper_graspframe: true
+
+# Draw all sampled grasp poses of the current view angle.
+# Type: bool
+draw_all_graspposes: false
+
+# Draw the current grasp pose only of the current view angle.
+# This option overrides drawing all grasp poses.
+# Type: bool
+draw_current_grasppose: true
+
+# Draw object's bounding boxes.
+# Type: bool
+draw_bounding_box: true
+
+# Draw the camera model.
+# Type: bool
+draw_camera: false
+
+# Draw the frustum of the camera.
+# Type: bool
+draw_camera_frustum: false

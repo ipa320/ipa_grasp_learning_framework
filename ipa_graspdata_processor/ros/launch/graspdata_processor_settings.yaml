@@ -1,0 +1,44 @@
+# Defines the sides/edges [in m] of a cuboid that is used to cut out a region of geometry around each grasp pose.
+# The cuboid is therefore centered around each grasp pose.
+# The cuboid is aligned to the camera frame.
+# Format: [x-side, y-side, z-side]
+# Type: double
+#crop_cuboid_sides: [0.2, 0.2, 0.3]
+
+# Resolution of the final depth patches after cropping.
+# Format: [width, height]
+# Type: std::vector<int>
+depth_patch_resolution: [64, 64]
+
+# Load the camera intrinsics from camera_intrinsics.
+# The alternative is to laod it from a camera info callback.
+# Type: bool
+use_set_camera_intrinsics: true
+
+# 3x3 intrinsic camera matrix, which is used when use_set_camera_intrinsics is set to true.
+# This can be used for offline runs, when there is no topic available.
+# Format: [fx, 0, cx,
+#          0, fy, cy,
+#          0,  0,  1]
+# Type: std::vector<double>
+camera_intrinsics: [288.64456604576435, 0., 160.,
+                    0., 288.64456604576435, 120.,
+                    0., 0., 1.]
+
+# Camera info topic which will be subscribed to in order to receive the camera intrinsics.
+# Deactivated when use_set_camera_intrinsics is set to true.
+# Type: std::string
+camera_info_topic: "/Klampt_grasp_simulator/Klampt_grasp_simulator/CameraInfo"
+
+# Push raw and processed data to a topic which can then be viewed using rviz.
+# Type: bool
+visualize_data: false
+
+# Step through raw data using this step size.
+# Type: int
+raw_data_visualization_step: 1
+
+# Step through processed data using this step size.
+# Type: int
+processed_data_visualization_step: 100
+

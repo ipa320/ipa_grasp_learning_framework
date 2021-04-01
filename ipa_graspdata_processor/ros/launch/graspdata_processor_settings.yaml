@@ -1,9 +1,10 @@
 # Defines the sides/edges [in m] of a cuboid that is used to cut out a region of geometry around each grasp pose.
 # The cuboid is therefore centered around each grasp pose.
 # The cuboid is aligned to the camera frame.
+# Note: Moved to service interface, so it is handed over via code.
 # Format: [x-side, y-side, z-side]
 # Type: double
-#crop_cuboid_sides: [0.2, 0.2, 0.3]
+#crop_cuboid_sides: [0.2, 0.2, 0.2]
 
 # Resolution of the final depth patches after cropping.
 # Format: [width, height]

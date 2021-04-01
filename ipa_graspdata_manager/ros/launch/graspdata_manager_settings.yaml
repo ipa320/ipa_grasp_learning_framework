@@ -17,6 +17,7 @@ online_data_processing: false
 # This flag allows to process and save the data of a pre-built raw database.
 # The raw data will be read from raw_storage_folder_path and saved in processed_storage_folder_path.
 # The flag is set in the offline launch file.
+# Note: Moved - This flag is set via the launch file.
 # Type: bool
 #process_raw_database: false
 

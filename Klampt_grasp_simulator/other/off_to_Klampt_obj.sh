@@ -16,7 +16,7 @@
 
 #!/bin/bash
 
-data_directory=~/kit_converted
+data_directory=../data/objects/test
 input_ext=.off
 output_ext=.obj
 

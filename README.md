@@ -63,11 +63,11 @@ The simulation along with all other relevant nodes to generate grasp data can be
 
 >roslaunch Klampt_grasp_simulator simulator.launch
 
-Moreover, further simulation processes can be started to speed up the data gathering using by assigning each simulation process a different share of the _graspable_objects_ list:
+Moreover, further simulation processes can be started to, for example, speed up the data gathering using by assigning each simulation process a different share of the _graspable_objects_ list. There is another launch file for a second simulator process, but as many as wanted can be created by setting up further launch files and associated config files. Take into account that the second simulator cannot be started without the first simulator launch file having priorly been started.
 
->roslaunch Klampt_grasp_simulator simulatorX.launch
+>roslaunch Klampt_grasp_simulator simulator2.launch
 
-with X in {2,6}. These launch-files just start further simulation nodes and use the existent nodes to generate grasp candidates and save the data to the drive (_~/.ros_ defines the main storage folder).
+These launch-files just start further simulation nodes and use the existent nodes to generate grasp candidates and save the data to the drive (_~/.ros_ defines the main storage folder).
 
 After having created the raw database containing depth images and evaluated grasp candidates, the data has to be processed into a format the neural network can learn from. This procedure can be initiated by executing:
 
@@ -107,7 +107,9 @@ An example to demonstrate the prediction code can be started using:
 Before launching the simulator, the code snippet responsible to perform predictions inside _Klampt_grasp_simulator/ros/src/simulation_backend.cpp_ in _SimulationBackend::callSaveGraspdataService()_ has to be uncommented and compiled. Now, instead of saving the gathered data to the drive, it is fed to the neural network.
 
 ## Klamp't Object Models
-In order to be able to load a 3D model into the simulation, it first has to be converted into the _obj_ file format Klamp't works with. The file format consists of a reference to an _off_ file that contains the geometrical data of the object and the physical parameters. Inside _Klampt_grasp_simulator/other_ there are two bash-scripts to facilitate the conversion process. Hereby, the _model_converter.sh_ can be configured to convert models to the _off_ format utilizing the _ctmconv_ command which is part of [OpenCTM](https://github.com/Danny02/OpenCTM). Furthermore, the converted models can be wrapped into the Klamp't format using the second bash-script _off_to_Klampt_obj.sh_ which assign standard physical properties to all models.
+In order to be able to load a 3D model into the simulation, it first has to be converted into the _obj_ file format Klamp't works with. The file format consists of a reference to an _off_ file that contains the geometrical data of the object and the physical parameters. Inside _Klampt_grasp_simulator/other_ there are two bash-scripts to facilitate the conversion process. Hereby, the _model_converter.sh_ can be configured to convert models to the _off_ format utilizing the _ctmconv_ command which is part of [OpenCTM](https://github.com/Danny02/OpenCTM). Furthermore, the converted models can be wrapped into the Klamp't format using the second bash-script _off_to_Klampt_obj.sh_ which assigns standard physical properties to all models. Take into account that the script files need to be made executable beforehand:
+
+>chmod +x <fileName>
 
 ## Custom Grippers
 Aside from the provided gripper of the Care-O-bot 4, further grippers can be integrated into the simulation. To achieve that, first, the model of the gripper and its kinematic have to be defined. This happens in the _rob_ file of Klamp't. Hereby, Klamp't offers a tool called _URDFtoRob_ to convert _urdf_ files into _rob_ files. The ability of the gripper to freely float in the simulation is achieved by attaching a floating base to the first link of the gripper. Such a floating base is provided in _Klampt_grasp_simulator/data/grippers/gripper_floating_base.rob_. More information about how to set up a robot in the _rob_ format can be found [here](http://motion.pratt.duke.edu/klampt/pyklampt_docs/Manual-FileTypes.html#robot-rob-files) and [here](https://github.com/krishauser/Klampt/blob/master/Cpp/docs/Tutorials/Import-and-calibrate-urdf.md).

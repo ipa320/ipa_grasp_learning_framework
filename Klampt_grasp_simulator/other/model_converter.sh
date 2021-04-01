@@ -16,9 +16,9 @@
 
 #!/bin/bash
 
-data_directory=~/kit_models
-input_ext=.obj
-output_directory=~/kit_converted
+data_directory=../data/objects/test/raw
+input_ext=.stl
+output_directory=../data/objects/test
 output_ext=.off
 
 for file in $(find $data_directory -name "*$input_ext")

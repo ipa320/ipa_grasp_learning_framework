@@ -7,7 +7,7 @@
 	<!-- Start Klampt_grasp_simulator node -->
 	<node ns="Klampt_grasp_simulator" name="Klampt_grasp_simulator2" pkg="Klampt_grasp_simulator" type="Klampt_grasp_simulator" output="log" >
 		<param name="world" value="$(find Klampt_grasp_simulator)/data/worlds/$(arg world)" />
-		<param name="objects" value="$(find Klampt_grasp_simulator)/data/objects/kit/" />
+		<param name="objects" value="$(find Klampt_grasp_simulator)/data/objects/test/" />
 		<rosparam command="load" file="$(find Klampt_grasp_simulator)/ros/launch/simulator_settings2.yaml" />
 		<rosparam command="load" file="$(find Klampt_grasp_simulator)/ros/launch/gripper_settings.yaml" />
 	</node>
